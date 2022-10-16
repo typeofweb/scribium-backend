@@ -1,14 +1,11 @@
-# compiled output
 /dist
 /node_modules
 
-# Logs
 yarn-debug.log*
 yarn-error.log*
 
-# OS
 .DS_Store
+.env
 
-# IDEs and editors
 /.fleet
 /.idea
