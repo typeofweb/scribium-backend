@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PRISMA_TOKEN } from 'src/prisma/prisma.module';
 
@@ -23,26 +23,14 @@ export class SchoolsService {
   }
 
   async createSchool(createSchoolDto: CreateSchoolDto): Promise<School> {
-    try {
-      return await this.prismaClient.school.create({ data: createSchoolDto });
-    } catch (err) {
-      throw new ConflictException('School already exists.');
-    }
+    return await this.prismaClient.school.create({ data: createSchoolDto });
   }
 
   async updateSchool(id: number, updateSchoolDto: UpdateSchoolDto): Promise<School> {
-    try {
-      return await this.prismaClient.school.update({ where: { id }, data: updateSchoolDto });
-    } catch (err) {
-      throw new NotFoundException('Wrong id.');
-    }
+    return await this.prismaClient.school.update({ where: { id }, data: updateSchoolDto });
   }
 
   async deleteSchool(id: number): Promise<School> {
-    try {
-      return await this.prismaClient.school.delete({ where: { id } });
-    } catch (err) {
-      throw new NotFoundException('Wrong id.');
-    }
+    return await this.prismaClient.school.delete({ where: { id } });
   }
 }
