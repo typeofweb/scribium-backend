@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 import { PRISMA_TOKEN } from 'src/prisma/prisma.module';
 
 import type { School } from '@prisma/client';
-import type { CreateSchoolDto } from './dtos/create-school.dto';
-import type { UpdateSchoolDto } from './dtos/update-school.dto';
+import type { CreateSchoolDto } from './dto/create-school.dto';
+import type { UpdateSchoolDto } from './dto/update-school.dto';
 
 @Injectable()
 export class SchoolsService {

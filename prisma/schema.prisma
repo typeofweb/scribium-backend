@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id            Int         @id @default(autoincrement())
-  email         String      @unique
-  password      String      @unique
-  roles         Role[]
-  userDetails   UserDetails @relation(fields: [userDetailsId], references: [id])
-  userDetailsId Int         @unique @map("user_details_id")
-  teacher       Teacher?
-  student       Student?
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  password  String      @unique
+  roles     Role[]
+  details   UserDetails @relation(fields: [detailsId], references: [id])
+  detailsId Int         @unique @map("user_details_id")
+  teacher   Teacher?
+  student   Student?
 
   @@map("user")
 }

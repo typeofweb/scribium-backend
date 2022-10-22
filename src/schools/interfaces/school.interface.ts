@@ -1,4 +1,4 @@
-export class SchoolDto {
+export interface School {
   id: number;
   name: string;
 }
