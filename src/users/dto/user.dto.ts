@@ -1,6 +1,6 @@
 import type { Role } from '@prisma/client';
 
-export interface AppUser {
+export class UserDto {
   id: number;
   email: string;
   roles: Role[];

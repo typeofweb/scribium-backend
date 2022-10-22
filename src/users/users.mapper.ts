@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import type { AppUser } from './interfaces/app-user.interface';
-import type { PrismaUser } from './users.types';
+import type { UserDto } from './dto/user.dto';
+import type { AppUser } from './users.types';
 
 @Injectable()
 export class UsersMapper {
-  mapPrismaUserToAppUser({ id, email, roles, details: { firstName, lastName, address } }: PrismaUser): AppUser {
+  mapUserToUserDto({ id, email, roles, details: { firstName, lastName, address } }: AppUser): UserDto {
     return { id, email, roles, details: { firstName, lastName, address } };
   }
 }

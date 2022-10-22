@@ -18,7 +18,7 @@ export class SchoolsService {
     try {
       return await this.prismaClient.school.findFirstOrThrow({ where: { id } });
     } catch (err) {
-      throw new NotFoundException('Wrong id.');
+      throw new NotFoundException('School not found.');
     }
   }
 

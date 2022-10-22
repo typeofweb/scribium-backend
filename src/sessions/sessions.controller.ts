@@ -1,13 +1,13 @@
-import { Controller, Post, Get, Delete, Body, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Body, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { SessionsService } from './sessions.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UsersMapper } from 'src/users/users.mapper';
-import { AppUser } from 'src/users/interfaces/app-user.interface';
 import { User } from 'src/auth/decorators/user.decorator';
-import { PrismaUser } from 'src/users/users.types';
+import { AppUser } from 'src/users/users.types';
+import { UserDto } from 'src/users/dto/user.dto';
 
-import type { Session } from './interfaces/session.interface';
+import type { SessionDto } from './dto/session.dto';
 
 @Controller('sessions')
 export class SessionsController {
@@ -15,18 +15,13 @@ export class SessionsController {
 
   @Get('me')
   @UseGuards(AuthGuard)
-  getSession(@User() user: PrismaUser): AppUser {
-    return this.usersMapper.mapPrismaUserToAppUser(user);
+  getSession(@User() user: AppUser): UserDto {
+    return this.usersMapper.mapUserToUserDto(user);
   }
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  createSession(@Body() createSessionDto: CreateSessionDto): Promise<Session> {
+  createSession(@Body() createSessionDto: CreateSessionDto): Promise<SessionDto> {
     return this.sessionsService.createSession(createSessionDto);
-  }
-
-  @Delete()
-  deleteToken() {
-    return ''; // TODO: LOGOUT
   }
 }

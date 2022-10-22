@@ -3,13 +3,13 @@ import * as bcrypt from 'bcrypt';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 
-import type { User } from '@prisma/client';
+import type { AppUser } from 'src/users/users.types';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
-  async authenticate(email: string, password: string): Promise<User> {
+  async authenticate(email: string, password: string): Promise<AppUser> {
     const user = await this.usersService.getUserByEmail(email);
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -19,7 +19,7 @@ export class AuthService {
     return user;
   }
 
-  async authorize(userId: number, roles: string[]): Promise<User> {
+  async authorize(userId: number, roles: string[]): Promise<AppUser> {
     const user = await this.usersService.getUserById(userId);
 
     if (roles.length && !user.roles.find((role) => roles.includes(role))) {
