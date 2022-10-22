@@ -1,11 +1,11 @@
 import fp from 'fastify-plugin';
 
 import type { FastifyPluginCallback } from 'fastify';
-import type { PrismaUser } from 'src/users/users.types';
+import type { AppUser } from 'src/users/users.types';
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user: PrismaUser;
+    user: AppUser;
   }
 }
 
