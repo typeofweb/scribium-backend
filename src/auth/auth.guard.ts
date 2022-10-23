@@ -28,14 +28,14 @@ export class AuthGuard implements CanActivate {
     ]);
 
     const authorization = request.headers.authorization || '';
-    const [scheme, token] = authorization.split(' ');
+    const [scheme, credentials] = authorization.split(' ');
 
     if (!authorization || !schemes.includes(scheme.toLowerCase())) {
       this.unauthorizedReply(reply);
     }
 
     try {
-      const { id } = this.jwtService.verify<AuthToken>(token);
+      const { id } = this.jwtService.verify<AuthToken>(credentials);
 
       request.user = await this.authService.authorize(id, roles);
     } catch (err) {
