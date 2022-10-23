@@ -22,7 +22,10 @@ export class AuthGuard implements CanActivate {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest<FastifyRequest>();
     const reply = ctx.getResponse<FastifyReply>();
-    const roles = this.reflector.getAllAndMerge<string[]>('roles', [context.getClass(), context.getHandler()]);
+    const roles = this.reflector.getAllAndMerge<string[]>('roles', [
+      context.getClass(),
+      context.getHandler(),
+    ]);
 
     const authorization = request.headers.authorization || '';
     const [type, token] = authorization.split(' ');

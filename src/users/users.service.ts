@@ -8,11 +8,16 @@ const include = { details: true } as const;
 
 @Injectable()
 export class UsersService {
-  constructor(@Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient) {}
+  constructor(
+    @Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient,
+  ) {}
 
   async getUserById(id: number): Promise<AppUser> {
     try {
-      return await this.prismaClient.user.findUniqueOrThrow({ where: { id }, include });
+      return await this.prismaClient.user.findUniqueOrThrow({
+        where: { id },
+        include,
+      });
     } catch (err) {
       throw new NotFoundException('User not found.');
     }

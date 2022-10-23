@@ -1,4 +1,9 @@
-import { Catch, ConflictException, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Catch,
+  ConflictException,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaErrorCode } from './prisma-errors';
 
@@ -13,7 +18,9 @@ export class PrismaExceptionFilter implements ExceptionFilter<PrismaErrors> {
         const { target } = exception.meta;
 
         throw new ConflictException(
-          `Provided ${target.join(' and ')} ${target.length === 1 ? 'is' : 'are'} already in use.`,
+          `Provided ${target.join(' and ')} ${
+            target.length === 1 ? 'is' : 'are'
+          } already in use.`,
         );
       case PrismaErrorCode.RecordNotFound:
       case PrismaErrorCode.RelatedRecordNotFound:

@@ -8,7 +8,9 @@ import type { UpdateSchoolDto } from './dto/update-school.dto';
 
 @Injectable()
 export class SchoolsService {
-  constructor(@Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient) {}
+  constructor(
+    @Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient,
+  ) {}
 
   async getAllSchools(): Promise<School[]> {
     return await this.prismaClient.school.findMany();
@@ -26,8 +28,14 @@ export class SchoolsService {
     return await this.prismaClient.school.create({ data: createSchoolDto });
   }
 
-  async updateSchool(id: number, updateSchoolDto: UpdateSchoolDto): Promise<School> {
-    return await this.prismaClient.school.update({ where: { id }, data: updateSchoolDto });
+  async updateSchool(
+    id: number,
+    updateSchoolDto: UpdateSchoolDto,
+  ): Promise<School> {
+    return await this.prismaClient.school.update({
+      where: { id },
+      data: updateSchoolDto,
+    });
   }
 
   async deleteSchool(id: number): Promise<School> {

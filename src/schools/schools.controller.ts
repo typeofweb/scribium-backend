@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  ValidationPipe,
+} from '@nestjs/common';
 import { SchoolsService } from './schools.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
@@ -21,14 +31,17 @@ export class SchoolsController {
   }
 
   @Post()
-  async createSchool(@Body() createSchoolDto: CreateSchoolDto): Promise<School> {
+  async createSchool(
+    @Body() createSchoolDto: CreateSchoolDto,
+  ): Promise<School> {
     return await this.schoolsService.createSchool(createSchoolDto);
   }
 
   @Patch(':id')
   async updateSchool(
     @Param('id', ParseIntPipe) id: number,
-    @Body(new ValidationPipe({ whitelist: true })) updateSchoolDto: UpdateSchoolDto,
+    @Body(new ValidationPipe({ whitelist: true }))
+    updateSchoolDto: UpdateSchoolDto,
   ): Promise<School> {
     return await this.schoolsService.updateSchool(id, updateSchoolDto);
   }

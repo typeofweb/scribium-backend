@@ -1,6 +1,7 @@
 import type { Prisma } from '@prisma/client';
 
-export interface InputValueTooLong extends Prisma.PrismaClientKnownRequestError {
+export interface InputValueTooLong
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2000';
   meta: {
     column_name: string;
@@ -16,7 +17,8 @@ export interface RecordNotFound extends Prisma.PrismaClientKnownRequestError {
   };
 }
 
-export interface UniqueKeyViolation extends Prisma.PrismaClientKnownRequestError {
+export interface UniqueKeyViolation
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2002';
   meta: {
     constraint: /* @todo */ object;
@@ -24,21 +26,24 @@ export interface UniqueKeyViolation extends Prisma.PrismaClientKnownRequestError
   };
 }
 
-export interface ForeignKeyViolation extends Prisma.PrismaClientKnownRequestError {
+export interface ForeignKeyViolation
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2003';
   meta: {
     field_name: string;
   };
 }
 
-export interface ConstraintViolation extends Prisma.PrismaClientKnownRequestError {
+export interface ConstraintViolation
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2004';
   meta: {
     database_error: string;
   };
 }
 
-export interface StoredValueIsInvalid extends Prisma.PrismaClientKnownRequestError {
+export interface StoredValueIsInvalid
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2005';
   meta: {
     field_value: string;
@@ -55,14 +60,16 @@ export interface TypeMismatch extends Prisma.PrismaClientKnownRequestError {
   };
 }
 
-export interface TypeMismatchInvalidCustomType extends Prisma.PrismaClientKnownRequestError {
+export interface TypeMismatchInvalidCustomType
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2007';
   meta: {
     database_error: string;
   };
 }
 
-export interface QueryParsingFailed extends Prisma.PrismaClientKnownRequestError {
+export interface QueryParsingFailed
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2008';
   meta: {
     query_parsing_error: string;
@@ -70,7 +77,8 @@ export interface QueryParsingFailed extends Prisma.PrismaClientKnownRequestError
   };
 }
 
-export interface QueryValidationFailed extends Prisma.PrismaClientKnownRequestError {
+export interface QueryValidationFailed
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2009';
   meta: {
     query_validation_error: string;
@@ -86,21 +94,24 @@ export interface RawQueryFailed extends Prisma.PrismaClientKnownRequestError {
   };
 }
 
-export interface NullConstraintViolation extends Prisma.PrismaClientKnownRequestError {
+export interface NullConstraintViolation
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2011';
   meta: {
     constraint: /* @todo */ object;
   };
 }
 
-export interface MissingRequiredValue extends Prisma.PrismaClientKnownRequestError {
+export interface MissingRequiredValue
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2012';
   meta: {
     path: string;
   };
 }
 
-export interface MissingRequiredArgument extends Prisma.PrismaClientKnownRequestError {
+export interface MissingRequiredArgument
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2013';
   meta: {
     argument_name: string;
@@ -109,7 +120,8 @@ export interface MissingRequiredArgument extends Prisma.PrismaClientKnownRequest
   };
 }
 
-export interface RelationViolation extends Prisma.PrismaClientKnownRequestError {
+export interface RelationViolation
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2014';
   meta: {
     relation_name: string;
@@ -118,21 +130,24 @@ export interface RelationViolation extends Prisma.PrismaClientKnownRequestError 
   };
 }
 
-export interface RelatedRecordNotFound extends Prisma.PrismaClientKnownRequestError {
+export interface RelatedRecordNotFound
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2015';
   meta: {
     details: string;
   };
 }
 
-export interface InterpretationError extends Prisma.PrismaClientKnownRequestError {
+export interface InterpretationError
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2016';
   meta: {
     details: string;
   };
 }
 
-export interface RecordsNotConnected extends Prisma.PrismaClientKnownRequestError {
+export interface RecordsNotConnected
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2017';
   meta: {
     relation_name: string;
@@ -141,7 +156,8 @@ export interface RecordsNotConnected extends Prisma.PrismaClientKnownRequestErro
   };
 }
 
-export interface ConnectedRecordsNotFound extends Prisma.PrismaClientKnownRequestError {
+export interface ConnectedRecordsNotFound
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2018';
   meta: {
     details: string;
@@ -162,21 +178,24 @@ export interface ValueOutOfRange extends Prisma.PrismaClientKnownRequestError {
   };
 }
 
-export interface TableDoesNotExist extends Prisma.PrismaClientKnownRequestError {
+export interface TableDoesNotExist
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2021';
   meta: {
     table: string;
   };
 }
 
-export interface ColumnDoesNotExist extends Prisma.PrismaClientKnownRequestError {
+export interface ColumnDoesNotExist
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2022';
   meta: {
     column: string;
   };
 }
 
-export interface InconsistentColumnData extends Prisma.PrismaClientKnownRequestError {
+export interface InconsistentColumnData
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2023';
   meta: {
     message: string;
@@ -191,14 +210,16 @@ export interface PoolTimeout extends Prisma.PrismaClientKnownRequestError {
   };
 }
 
-export interface RecordRequiredButNotFound extends Prisma.PrismaClientKnownRequestError {
+export interface RecordRequiredButNotFound
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2025';
   meta: {
     cause: string;
   };
 }
 
-export interface UnsupportedFeature extends Prisma.PrismaClientKnownRequestError {
+export interface UnsupportedFeature
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2026';
   meta: {
     feature: string;
@@ -212,31 +233,36 @@ export interface MultiError extends Prisma.PrismaClientKnownRequestError {
   };
 }
 
-export interface InteractiveTransactionError extends Prisma.PrismaClientKnownRequestError {
+export interface InteractiveTransactionError
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2028';
   meta: {
     error: string;
   };
 }
 
-export interface QueryParameterLimitExceeded extends Prisma.PrismaClientKnownRequestError {
+export interface QueryParameterLimitExceeded
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2029';
   meta: {
     message: string;
   };
 }
 
-export interface MissingFullTextSearchIndex extends Prisma.PrismaClientKnownRequestError {
+export interface MissingFullTextSearchIndex
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2030';
   meta: Record<string, unknown>;
 }
 
-export interface MongoReplicaSetRequired extends Prisma.PrismaClientKnownRequestError {
+export interface MongoReplicaSetRequired
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2031';
   meta: Record<string, unknown>;
 }
 
-export interface MissingFieldsInModel extends Prisma.PrismaClientKnownRequestError {
+export interface MissingFieldsInModel
+  extends Prisma.PrismaClientKnownRequestError {
   code: 'P2032';
   meta: {
     field: string;

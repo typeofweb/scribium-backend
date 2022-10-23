@@ -1,6 +1,10 @@
 import * as bcrypt from 'bcrypt';
 
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '../jwt/jwt.service';
 
@@ -11,7 +15,10 @@ import type { AuthToken } from './interfaces/auth-token.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async login({ email, password }: AuthRequestDto): Promise<AuthResponseDto> {
     const { id } = await this.authenticate(email, password);
