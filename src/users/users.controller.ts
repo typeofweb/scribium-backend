@@ -3,7 +3,6 @@ import { AuthGuard } from '../auth/auth.guard';
 import { User } from '../auth/decorators/user.decorator';
 import { UsersMapper } from './users.mapper';
 import { UserDto } from './dto/user.dto';
-
 import { AppUser } from './interfaces/app-user.interface';
 
 @Controller('users')

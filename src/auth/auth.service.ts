@@ -2,10 +2,10 @@ import * as bcrypt from 'bcrypt';
 
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import type { AuthRequestDto } from './dto/auth-request.dto';
 import { JwtService } from '../jwt/jwt.service';
-import type { AuthResponseDto } from './dto/auth-response.dto';
 
+import type { AuthRequestDto } from './dto/auth-request.dto';
+import type { AuthResponseDto } from './dto/auth-response.dto';
 import type { AppUser } from 'src/users/interfaces/app-user.interface';
 import type { AuthToken } from './interfaces/auth-token.interface';
 
