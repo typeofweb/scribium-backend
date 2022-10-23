@@ -5,8 +5,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
-import { JwtService } from '../jwt/jwt.service';
 
 import type { AuthRequestDto } from './dto/auth-request.dto';
 import type { AuthResponseDto } from './dto/auth-response.dto';
@@ -22,7 +22,7 @@ export class AuthService {
 
   async login({ email, password }: AuthRequestDto): Promise<AuthResponseDto> {
     const { id } = await this.authenticate(email, password);
-    const token = this.jwtService.sign<AuthToken>({ id });
+    const token = await this.jwtService.signAsync({ id } as AuthToken);
 
     return { token };
   }
