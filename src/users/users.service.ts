@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PRISMA_TOKEN } from 'src/prisma/prisma.module';
 
-import type { AppUser } from './users.types';
+import type { AppUser } from './interfaces/app-user.interface';
 
 const include = { details: true } as const;
 

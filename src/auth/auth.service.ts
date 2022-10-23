@@ -2,12 +2,23 @@ import * as bcrypt from 'bcrypt';
 
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
+import type { AuthRequestDto } from './dto/auth-request.dto';
+import { JwtService } from '../jwt/jwt.service';
+import type { AuthResponseDto } from './dto/auth-response.dto';
 
-import type { AppUser } from 'src/users/users.types';
+import type { AppUser } from 'src/users/interfaces/app-user.interface';
+import type { AuthToken } from './interfaces/auth-token.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
+
+  async login({ email, password }: AuthRequestDto): Promise<AuthResponseDto> {
+    const { id } = await this.authenticate(email, password);
+    const token = this.jwtService.sign<AuthToken>({ id });
+
+    return { token };
+  }
 
   async authenticate(email: string, password: string): Promise<AppUser> {
     const user = await this.usersService.getUserByEmail(email);

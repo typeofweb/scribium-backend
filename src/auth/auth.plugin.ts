@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin';
 
 import type { FastifyPluginCallback } from 'fastify';
-import type { AppUser } from 'src/users/users.types';
+import type { AppUser } from 'src/users/interfaces/app-user.interface';
 
 declare module 'fastify' {
   interface FastifyRequest {

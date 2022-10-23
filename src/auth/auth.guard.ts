@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 
 import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import type { FastifyRequest, FastifyReply } from 'fastify';
-import type { Token } from 'src/sessions/interfaces/token.interface';
+import type { AuthToken } from './interfaces/auth-token.interface';
 
 const schemes = ['bearer'];
 
@@ -24,20 +24,15 @@ export class AuthGuard implements CanActivate {
     const reply = ctx.getResponse<FastifyReply>();
     const roles = this.reflector.getAllAndMerge<string[]>('roles', [context.getClass(), context.getHandler()]);
 
-    const { authorization } = request.headers;
-
-    if (!authorization) {
-      this.unauthorizedReply(reply);
-    }
-
+    const authorization = request.headers.authorization || '';
     const [type, token] = authorization.split(' ');
 
-    if (!schemes.includes(type.toLowerCase())) {
+    if (!authorization || !schemes.includes(type.toLowerCase())) {
       this.unauthorizedReply(reply);
     }
 
     try {
-      const { id } = this.jwtService.verify<Token>(token);
+      const { id } = this.jwtService.verify<AuthToken>(token);
 
       request.user = await this.authService.authorize(id, roles);
     } catch (err) {

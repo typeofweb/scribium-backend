@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class JwtService {
   sign<T extends object | string | Buffer>(payload: T, options?: jwt.SignOptions): string {
-    return jwt.sign(payload, 'SECRET', options); // TODO: CONFIGURE SECRET
+    return jwt.sign(payload, 'SECRET', options); // TODO: ADD SECRET CONFIGURATION
   }
 
   verify<T>(token: string, options?: jwt.VerifyOptions): T {
