@@ -28,9 +28,9 @@ export class AuthGuard implements CanActivate {
     ]);
 
     const authorization = request.headers.authorization || '';
-    const [type, token] = authorization.split(' ');
+    const [scheme, token] = authorization.split(' ');
 
-    if (!authorization || !schemes.includes(type.toLowerCase())) {
+    if (!authorization || !schemes.includes(scheme.toLowerCase())) {
       this.unauthorizedReply(reply);
     }
 
