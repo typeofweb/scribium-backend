@@ -25,48 +25,59 @@ model UserDetails {
   firstName String @map("first_name")
   lastName  String @map("last_name")
   address   String
+  phone     String @db.Char(9)
   user      User?
 
   @@map("user_details")
 }
 
 model School {
-  id       Int              @id @default(autoincrement())
-  name     String           @unique
-  address  String           @unique
-  email    String
-  phone    String           @db.VarChar(9)
-  teachers Teacher[]
-  students Student[]
-  subjects SchoolSubjects[]
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  address    String      @unique
+  email      String
+  phone      String      @db.VarChar(9)
+  teachers   Teacher[]
+  students   Student[]
+  subjects   Subject[]
+  classrooms Classroom[]
 
   @@map("school")
 }
 
-model SchoolSubjects {
-  id          Int     @id @default(autoincrement())
+model Subject {
+  id          Int                @id @default(autoincrement())
   title       String
   description String
-  school      School  @relation(fields: [schoolId], references: [id])
-  schoolId    Int     @map("school_id")
-  teacher     Teacher @relation(fields: [teacherId], references: [id])
-  teacherId   Int     @map("teacher_id")
+  school      School             @relation(fields: [schoolId], references: [id])
+  schoolId    Int                @map("school_id")
   grade       Grade[]
+  teachers    TeachersSubjects[]
 
-  @@map("school_subjects")
+  @@map("subject")
 }
 
 model Teacher {
-  id        Int              @id @default(autoincrement())
-  user      User             @relation(fields: [userId], references: [id])
-  userId    Int              @unique @map("user_id")
-  school    School           @relation(fields: [schoolId], references: [id])
-  schoolId  Int              @map("school_id")
-  subjects  SchoolSubjects[]
+  id        Int                @id @default(autoincrement())
+  user      User               @relation(fields: [userId], references: [id])
+  userId    Int                @unique @map("user_id")
+  school    School             @relation(fields: [schoolId], references: [id])
+  schoolId  Int                @map("school_id")
   classroom Classroom?
   grades    Grade[]
+  subjects  TeachersSubjects[]
 
   @@map("teacher")
+}
+
+model TeachersSubjects {
+  teacher   Teacher @relation(fields: [teacherId], references: [id])
+  teacherId Int     @map("teacher_id")
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  subjectId Int     @map("subject_id")
+
+  @@id([teacherId, subjectId])
+  @@map("teachers_subjects")
 }
 
 model Student {
@@ -84,6 +95,10 @@ model Student {
 
 model Classroom {
   id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(1)
+  year      Int       @db.SmallInt
+  school    School    @relation(fields: [schoolId], references: [id])
+  schoolId  Int       @map("school_id")
   teacher   Teacher   @relation(fields: [teacherId], references: [id])
   teacherId Int       @unique @map("teacher_id")
   students  Student[]
@@ -92,15 +107,15 @@ model Classroom {
 }
 
 model Grade {
-  id          Int            @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   description String
   weight      Int
-  subject     SchoolSubjects @relation(fields: [subjectId], references: [id])
-  subjectId   Int            @map("subject_id")
-  teacher     Teacher        @relation(fields: [teacherId], references: [id])
-  teacherId   Int            @map("teacher_id")
-  student     Student        @relation(fields: [studentId], references: [id])
-  studentId   Int            @map("student_id")
+  subject     Subject @relation(fields: [subjectId], references: [id])
+  subjectId   Int     @map("subject_id")
+  teacher     Teacher @relation(fields: [teacherId], references: [id])
+  teacherId   Int     @map("teacher_id")
+  student     Student @relation(fields: [studentId], references: [id])
+  studentId   Int     @map("student_id")
 
   @@map("grade")
 }
