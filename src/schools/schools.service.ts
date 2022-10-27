@@ -18,7 +18,9 @@ export class SchoolsService {
 
   async getSchoolById(id: number): Promise<School> {
     try {
-      return await this.prismaClient.school.findFirstOrThrow({ where: { id } });
+      return await this.prismaClient.school.findUniqueOrThrow({
+        where: { id },
+      });
     } catch (err) {
       throw new NotFoundException('School not found.');
     }
