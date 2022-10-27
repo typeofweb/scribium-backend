@@ -12,11 +12,12 @@ import {
 import { SchoolsService } from './schools.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
 import type { School } from '@prisma/client';
 
-// TODO: SECURE ENDPOINTS
 @Controller('schools')
+@Auth('ADMIN')
 export class SchoolsController {
   constructor(private readonly schoolsService: SchoolsService) {}
 
