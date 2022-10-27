@@ -7,5 +7,6 @@ import { SchoolsService } from './schools.service';
   imports: [AuthModule],
   controllers: [SchoolsController],
   providers: [SchoolsService],
+  exports: [SchoolsService],
 })
 export class SchoolsModule {}

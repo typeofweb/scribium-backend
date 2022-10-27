@@ -1,6 +1,7 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PRISMA_TOKEN } from 'src/prisma/prisma.module';
+import { SchoolNotFoundException } from './exceptions/school-not-found.exception';
 
 import type { School } from '@prisma/client';
 import type { CreateSchoolDto } from './dto/create-school.dto';
@@ -22,7 +23,17 @@ export class SchoolsService {
         where: { id },
       });
     } catch (err) {
-      throw new NotFoundException('School not found.');
+      throw new SchoolNotFoundException();
+    }
+  }
+
+  async getSchoolByStudentId(id: number): Promise<School> {
+    try {
+      return await this.prismaClient.school.findFirstOrThrow({
+        where: { students: { some: { id } } },
+      });
+    } catch (err) {
+      throw new SchoolNotFoundException();
     }
   }
 

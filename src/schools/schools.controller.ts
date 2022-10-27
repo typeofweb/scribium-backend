@@ -27,7 +27,7 @@ export class SchoolsController {
   }
 
   @Get(':id')
-  async getSchool(@Param('id', ParseIntPipe) id: number): Promise<School> {
+  async getSchoolById(@Param('id', ParseIntPipe) id: number): Promise<School> {
     return await this.schoolsService.getSchoolById(id);
   }
 
