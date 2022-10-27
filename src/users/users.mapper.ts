@@ -9,8 +9,13 @@ export class UsersMapper {
     id,
     email,
     roles,
-    details: { firstName, lastName, address },
+    details: { firstName, lastName, address, phone },
   }: AppUser): UserDto {
-    return { id, email, roles, details: { firstName, lastName, address } };
+    return {
+      id,
+      email,
+      roles,
+      details: { firstName, lastName, address, phone },
+    };
   }
 }
