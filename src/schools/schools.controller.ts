@@ -16,8 +16,8 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 
 import type { School } from '@prisma/client';
 
-@Controller('schools')
 @Auth('ADMIN')
+@Controller('schools')
 export class SchoolsController {
   constructor(private readonly schoolsService: SchoolsService) {}
 

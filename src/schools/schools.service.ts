@@ -27,10 +27,15 @@ export class SchoolsService {
     }
   }
 
-  async getSchoolByStudentId(id: number): Promise<School> {
+  async getSchoolByUserId(userId: number): Promise<School> {
     try {
       return await this.prismaClient.school.findFirstOrThrow({
-        where: { students: { some: { id } } },
+        where: {
+          OR: [
+            { students: { some: { userId } } },
+            { teachers: { some: { userId } } },
+          ],
+        },
       });
     } catch (err) {
       throw new SchoolNotFoundException();
