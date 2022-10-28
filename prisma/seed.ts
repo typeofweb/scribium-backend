@@ -51,7 +51,7 @@ const generateAddress = () =>
 
   const teachers = await Promise.all(
     users
-      .filter(({ roles }) => roles.includes('ADMIN'))
+      .filter(({ roles }) => roles.includes('TEACHER'))
       .map(({ id }) =>
         prisma.teacher.create({ data: { userId: id, schoolId: school.id } }),
       ),
