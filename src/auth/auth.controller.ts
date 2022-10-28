@@ -1,14 +1,7 @@
-import {
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Body,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, HttpCode, HttpStatus, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthRequestDto } from './dto/auth-request.dto';
-import { AuthGuard } from './auth.guard';
+import { Auth } from './decorators/auth.decorator';
 
 import type { AuthResponseDto } from './dto/auth-response.dto';
 
@@ -24,9 +17,9 @@ export class AuthController {
     return this.authService.login(authRequestDto);
   }
 
+  @Auth()
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(AuthGuard)
   logout(): string {
     // TODO: PUT TOKEN INTO REDIS
     return '';
