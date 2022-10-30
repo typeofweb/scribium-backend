@@ -4,10 +4,10 @@ export class UserDto {
   id: number;
   email: string;
   roles: Role[];
-  details: {
+  details: Partial<{
     firstName: string;
     lastName: string;
     address: string;
     phone: string;
-  };
+  }>;
 }

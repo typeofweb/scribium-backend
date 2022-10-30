@@ -8,14 +8,13 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique
-  password  String      @unique
-  roles     Role[]
-  details   UserDetails @relation(fields: [detailsId], references: [id])
-  detailsId Int         @unique @map("user_details_id")
-  teacher   Teacher?
-  student   Student?
+  id       Int          @id @default(autoincrement())
+  email    String       @unique
+  password String       @unique
+  roles    Role[]
+  details  UserDetails?
+  teacher  Teacher?
+  student  Student?
 
   @@map("user")
 }
@@ -26,7 +25,8 @@ model UserDetails {
   lastName  String @map("last_name")
   address   String
   phone     String @db.Char(9)
-  user      User?
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int    @unique @map("user_id")
 
   @@map("user_details")
 }
@@ -59,7 +59,7 @@ model Subject {
 
 model Teacher {
   id        Int                @id @default(autoincrement())
-  user      User               @relation(fields: [userId], references: [id])
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int                @unique @map("user_id")
   school    School             @relation(fields: [schoolId], references: [id])
   schoolId  Int                @map("school_id")
@@ -71,7 +71,7 @@ model Teacher {
 }
 
 model TeachersSubjects {
-  teacher   Teacher @relation(fields: [teacherId], references: [id])
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherId Int     @map("teacher_id")
   subject   Subject @relation(fields: [subjectId], references: [id])
   subjectId Int     @map("subject_id")
@@ -82,7 +82,7 @@ model TeachersSubjects {
 
 model Student {
   id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int       @unique @map("user_id")
   school      School    @relation(fields: [schoolId], references: [id])
   schoolId    Int       @map("school_id")
@@ -99,8 +99,8 @@ model Classroom {
   year      Int       @db.SmallInt
   school    School    @relation(fields: [schoolId], references: [id])
   schoolId  Int       @map("school_id")
-  teacher   Teacher   @relation(fields: [teacherId], references: [id])
-  teacherId Int       @unique @map("teacher_id")
+  teacher   Teacher?  @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherId Int?      @unique @map("teacher_id")
   students  Student[]
 
   @@map("classroom")
