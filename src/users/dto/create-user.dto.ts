@@ -7,7 +7,7 @@ import {
   Length,
   Matches,
 } from 'class-validator';
-import { PASSWORD_REGEX } from 'src/app.constants';
+import { PASSWORD_ERROR_MESSAGE, PASSWORD_REGEX } from 'src/app.constants';
 
 export class CreateUserDto {
   @IsEmail()
@@ -15,7 +15,7 @@ export class CreateUserDto {
 
   @IsString()
   @Matches(PASSWORD_REGEX, {
-    message: 'password can be 6 to 20 characters long.',
+    message: PASSWORD_ERROR_MESSAGE,
   })
   password: string;
 

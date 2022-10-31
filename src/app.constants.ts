@@ -2,6 +2,9 @@ import { mixed, number, object, string } from 'yup';
 
 export const PASSWORD_REGEX = /^.{6,20}$/;
 
+export const PASSWORD_ERROR_MESSAGE =
+  'password can be 6 to 20 characters long.';
+
 export const CONFIG_SCHEMA = object({
   HOST: string().required().default('127.0.0.1'),
   PORT: number().required().default(3000),
