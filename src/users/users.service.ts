@@ -3,6 +3,8 @@ import * as bcrypt from 'bcrypt';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PRISMA_TOKEN } from 'src/prisma/prisma.module';
+import { ConfigService } from '@nestjs/config';
+import { AppConfigService } from 'src/app.types';
 
 import type { CreateUserDto } from './dto/create-user.dto';
 import type { AppUser } from './interfaces/app-user.interface';
@@ -15,6 +17,7 @@ const include = { details: true } as const;
 export class UsersService {
   constructor(
     @Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient,
+    @Inject(ConfigService) private readonly configService: AppConfigService,
   ) {}
 
   async getAllUsers({ limit, offset }: PaginationDto): Promise<AppUser[]> {
@@ -49,7 +52,10 @@ export class UsersService {
     return this.prismaClient.user.create({
       data: {
         email,
-        password: await bcrypt.hash(password, 10),
+        password: await bcrypt.hash(
+          password,
+          this.configService.get('SALT_OR_ROUNDS'),
+        ),
         roles: [role],
         details: {
           create,
@@ -67,7 +73,12 @@ export class UsersService {
       where: { id },
       data: {
         email,
-        password: password && (await bcrypt.hash(password, 10)),
+        password:
+          password &&
+          (await bcrypt.hash(
+            password,
+            this.configService.get('SALT_OR_ROUNDS'),
+          )),
         roles: role && [role],
         details: {
           update,
