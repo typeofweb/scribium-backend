@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { UsersMapper } from './users.mapper';
@@ -43,7 +44,9 @@ export class UsersController {
   }
 
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+  async createUser(
+    @Body(new ValidationPipe({ whitelist: true })) createUserDto: CreateUserDto,
+  ): Promise<UserDto> {
     return this.usersMapper.mapUserToUserDto(
       await this.usersService.createUser(createUserDto),
     );
@@ -52,7 +55,8 @@ export class UsersController {
   @Patch(':id')
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body(new ValidationPipe({ whitelist: true }))
+    updateUserDto: UpdateUserDto,
   ) {
     return this.usersMapper.mapUserToUserDto(
       await this.usersService.updateUser(id, updateUserDto),

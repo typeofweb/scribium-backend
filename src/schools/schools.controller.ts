@@ -37,7 +37,8 @@ export class SchoolsController {
 
   @Post()
   async createSchool(
-    @Body() createSchoolDto: CreateSchoolDto,
+    @Body(new ValidationPipe({ whitelist: true }))
+    createSchoolDto: CreateSchoolDto,
   ): Promise<School> {
     return await this.schoolsService.createSchool(createSchoolDto);
   }
