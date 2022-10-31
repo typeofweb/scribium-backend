@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsEmail, IsString } from 'class-validator';
+import { IsNotEmpty, IsEmail, Matches } from 'class-validator';
+import { PASSWORD_ERROR_MESSAGE, PASSWORD_REGEX } from 'src/app.constants';
 
 export class AuthRequestDto {
   @IsNotEmpty()
@@ -6,6 +7,8 @@ export class AuthRequestDto {
   email: string;
 
   @IsNotEmpty()
-  @IsString()
+  @Matches(PASSWORD_REGEX, {
+    message: PASSWORD_ERROR_MESSAGE,
+  })
   password: string;
 }
