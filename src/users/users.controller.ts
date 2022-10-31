@@ -57,7 +57,7 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Body(new ValidationPipe({ whitelist: true }))
     updateUserDto: UpdateUserDto,
-  ) {
+  ): Promise<UserDto> {
     return this.usersMapper.mapUserToUserDto(
       await this.usersService.updateUser(id, updateUserDto),
     );
