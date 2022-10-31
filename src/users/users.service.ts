@@ -52,10 +52,7 @@ export class UsersService {
     return this.prismaClient.user.create({
       data: {
         email,
-        password: await bcrypt.hash(
-          password,
-          this.configService.get('SALT_OR_ROUNDS'),
-        ),
+        password: await this.hashPassword(password),
         roles: [role],
         details: {
           create,
@@ -73,12 +70,7 @@ export class UsersService {
       where: { id },
       data: {
         email,
-        password:
-          password &&
-          (await bcrypt.hash(
-            password,
-            this.configService.get('SALT_OR_ROUNDS'),
-          )),
+        password: password && (await this.hashPassword(password)),
         roles: role && [role],
         details: {
           update,
@@ -90,5 +82,9 @@ export class UsersService {
 
   async deleteUser(id: number): Promise<AppUser> {
     return this.prismaClient.user.delete({ where: { id }, include });
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, this.configService.get('SALT_OR_ROUNDS'));
   }
 }
