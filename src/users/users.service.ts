@@ -7,6 +7,7 @@ import { PRISMA_TOKEN } from 'src/prisma/prisma.module';
 import type { CreateUserDto } from './dto/create-user.dto';
 import type { AppUser } from './interfaces/app-user.interface';
 import type { UpdateUserDto } from './dto/update-user.dto';
+import type { PaginationDto } from 'src/common/pagination/pagination.dto';
 
 const include = { details: true } as const;
 
@@ -16,8 +17,12 @@ export class UsersService {
     @Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient,
   ) {}
 
-  async getAllUsers(): Promise<AppUser[]> {
-    return await this.prismaClient.user.findMany({ include });
+  async getAllUsers({ limit, offset }: PaginationDto): Promise<AppUser[]> {
+    return await this.prismaClient.user.findMany({
+      include,
+      take: limit,
+      skip: offset,
+    });
   }
 
   async getUserById(id: number): Promise<AppUser> {

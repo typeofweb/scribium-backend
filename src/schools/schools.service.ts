@@ -6,6 +6,7 @@ import { SchoolNotFoundException } from './exceptions/school-not-found.exception
 import type { School } from '@prisma/client';
 import type { CreateSchoolDto } from './dto/create-school.dto';
 import type { UpdateSchoolDto } from './dto/update-school.dto';
+import type { PaginationDto } from 'src/common/pagination/pagination.dto';
 
 @Injectable()
 export class SchoolsService {
@@ -13,8 +14,11 @@ export class SchoolsService {
     @Inject(PRISMA_TOKEN) private readonly prismaClient: PrismaClient,
   ) {}
 
-  async getAllSchools(): Promise<School[]> {
-    return await this.prismaClient.school.findMany();
+  async getAllSchools({ limit, offset }: PaginationDto): Promise<School[]> {
+    return await this.prismaClient.school.findMany({
+      take: limit,
+      skip: offset,
+    });
   }
 
   async getSchoolById(id: number): Promise<School> {

@@ -13,6 +13,8 @@ import { SchoolsService } from './schools.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Pagination } from 'src/common/pagination/pagination.decorator';
+import { PaginationDto } from 'src/common/pagination/pagination.dto';
 
 import type { School } from '@prisma/client';
 
@@ -22,8 +24,10 @@ export class SchoolsController {
   constructor(private readonly schoolsService: SchoolsService) {}
 
   @Get()
-  async getAllSchools(): Promise<School[]> {
-    return await this.schoolsService.getAllSchools();
+  async getAllSchools(
+    @Pagination() pagination: PaginationDto,
+  ): Promise<School[]> {
+    return await this.schoolsService.getAllSchools(pagination);
   }
 
   @Get(':id')

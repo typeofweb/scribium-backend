@@ -13,6 +13,8 @@ import { UsersMapper } from './users.mapper';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Pagination } from 'src/common/pagination/pagination.decorator';
+import { PaginationDto } from 'src/common/pagination/pagination.dto';
 
 import type { UserDto } from './dto/user.dto';
 
@@ -25,9 +27,11 @@ export class UsersController {
   ) {}
 
   @Get()
-  async getAllUsers(): Promise<UserDto[]> {
+  async getAllUsers(
+    @Pagination() pagination: PaginationDto,
+  ): Promise<UserDto[]> {
     return this.usersMapper.mapUsersToUsersDto(
-      await this.usersService.getAllUsers(),
+      await this.usersService.getAllUsers(pagination),
     );
   }
 
